@@ -86,7 +86,7 @@ protected:
 	
 protected:
 	// APawn interface
-	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* SPInputComponent) override;
 	// End of APawn interface
 
 	/* 
@@ -95,7 +95,7 @@ protected:
 	 * @param	InputComponent	The input component pointer to bind controls to
 	 * @returns true if touch controls were enabled.
 	 */
-	bool EnableTouchscreenMovement(UInputComponent* InputComponent);
+	bool EnableTouchscreenMovement(UInputComponent* ETMInputComponent);
 
 public:
 	/** Returns Mesh1P subobject **/

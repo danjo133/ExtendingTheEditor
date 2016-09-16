@@ -51,30 +51,30 @@ AExtendingTheEditorCharacter::AExtendingTheEditorCharacter()
 //////////////////////////////////////////////////////////////////////////
 // Input
 
-void AExtendingTheEditorCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+void AExtendingTheEditorCharacter::SetupPlayerInputComponent(class UInputComponent* SPInputComponent)
 {
 	// set up gameplay key bindings
-	check(InputComponent);
+	check(SPInputComponent);
 
-	InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
-	InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	SPInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	SPInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	
 	//InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AExtendingTheEditorCharacter::TouchStarted);
-	if( EnableTouchscreenMovement(InputComponent) == false )
+	if( EnableTouchscreenMovement(SPInputComponent) == false )
 	{
-		InputComponent->BindAction("Fire", IE_Pressed, this, &AExtendingTheEditorCharacter::OnFire);
+		SPInputComponent->BindAction("Fire", IE_Pressed, this, &AExtendingTheEditorCharacter::OnFire);
 	}
 	
-	InputComponent->BindAxis("MoveForward", this, &AExtendingTheEditorCharacter::MoveForward);
-	InputComponent->BindAxis("MoveRight", this, &AExtendingTheEditorCharacter::MoveRight);
+	SPInputComponent->BindAxis("MoveForward", this, &AExtendingTheEditorCharacter::MoveForward);
+	SPInputComponent->BindAxis("MoveRight", this, &AExtendingTheEditorCharacter::MoveRight);
 	
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	InputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	InputComponent->BindAxis("TurnRate", this, &AExtendingTheEditorCharacter::TurnAtRate);
-	InputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	InputComponent->BindAxis("LookUpRate", this, &AExtendingTheEditorCharacter::LookUpAtRate);
+	SPInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	SPInputComponent->BindAxis("TurnRate", this, &AExtendingTheEditorCharacter::TurnAtRate);
+	SPInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	SPInputComponent->BindAxis("LookUpRate", this, &AExtendingTheEditorCharacter::LookUpAtRate);
 }
 
 void AExtendingTheEditorCharacter::OnFire()
@@ -203,15 +203,15 @@ void AExtendingTheEditorCharacter::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
-bool AExtendingTheEditorCharacter::EnableTouchscreenMovement(class UInputComponent* InputComponent)
+bool AExtendingTheEditorCharacter::EnableTouchscreenMovement(class UInputComponent* ETMInputComponent)
 {
 	bool bResult = false;
 	if(FPlatformMisc::GetUseVirtualJoysticks() || GetDefault<UInputSettings>()->bUseMouseForTouch )
 	{
 		bResult = true;
-		InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AExtendingTheEditorCharacter::BeginTouch);
-		InputComponent->BindTouch(EInputEvent::IE_Released, this, &AExtendingTheEditorCharacter::EndTouch);
-		InputComponent->BindTouch(EInputEvent::IE_Repeat, this, &AExtendingTheEditorCharacter::TouchUpdate);
+		ETMInputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AExtendingTheEditorCharacter::BeginTouch);
+		ETMInputComponent->BindTouch(EInputEvent::IE_Released, this, &AExtendingTheEditorCharacter::EndTouch);
+		ETMInputComponent->BindTouch(EInputEvent::IE_Repeat, this, &AExtendingTheEditorCharacter::TouchUpdate);
 	}
 	return bResult;
 }
