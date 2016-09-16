@@ -65,3 +65,4 @@
 # Other binaries
 /ExtendingTheEditor/.vs/**
 /ExtendingTheEditor/Binaries/**
+ExtendingTheEditor/ExtendingTheEditor.VC.db
